@@ -8,4 +8,9 @@
     <string name="menu_presents">Presents</string>
     <string name="menu_absents">Absents</string>
     <string name="button_fab_desc">Button add a new guest</string>
+    <string name="text_name">Name</string>
+    <string name="text_confirmation">Confirmation</string>
+    <string name="radio_presence">Present</string>
+    <string name="radio_absent">Absent</string>
+    <string name="button_save">Save</string>
 </resources>

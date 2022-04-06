@@ -1,5 +1,6 @@
 package io.github.felipedavi.guestlist.view
 
+import android.content.Intent
 import android.os.Bundle
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
@@ -22,7 +23,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.appBarMain.toolbar)
-        binding.appBarMain.fab.setOnClickListener { }
+        binding.appBarMain.fab.setOnClickListener { startActivity(Intent(applicationContext, GuestFormActivity::class.java)) }
         val drawerLayout: DrawerLayout = binding.drawerLayout
         val navView: NavigationView = binding.navView
         val navController = findNavController(R.id.nav_host_fragment_content_main)
