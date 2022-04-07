@@ -1,6 +1,8 @@
 package io.github.felipedavi.guestlist.service.repository
 
+import android.content.ContentValues
 import android.content.Context
+import io.github.felipedavi.guestlist.service.constants.DataBaseConstants
 import io.github.felipedavi.guestlist.service.model.GuestModel
 
 class GuestRepository private constructor(context: Context) {
@@ -16,7 +18,16 @@ class GuestRepository private constructor(context: Context) {
         }
     }
 
-    fun save(guest: GuestModel) {
-
+    fun save(guest: GuestModel): Boolean {
+        return try {
+            val db = mGuestDataBaseHelper.writableDatabase
+            val contentValues = ContentValues()
+            contentValues.put(DataBaseConstants.GUEST.COLUMNS.NAME, guest.name)
+            contentValues.put(DataBaseConstants.GUEST.COLUMNS.PRESENCE, guest.presence)
+            db.insert(DataBaseConstants.GUEST.TABLE_NAME, null, contentValues)
+            true
+        } catch (e: Exception) {
+            false
+        }
     }
 }
