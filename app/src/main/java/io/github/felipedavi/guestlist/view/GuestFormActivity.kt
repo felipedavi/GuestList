@@ -12,6 +12,7 @@ import io.github.felipedavi.guestlist.viewmodel.GuestFormViewModel
 class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
     private lateinit var binding: ActivityGuestFormBinding
     private lateinit var mViewModel: GuestFormViewModel
+    private var mGuestId: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityGuestFormBinding.inflate(layoutInflater)
@@ -28,7 +29,7 @@ class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
         if (id == R.id.button_save) {
             val name = binding.editName.text.toString()
             val presence = binding.radioPresence.isChecked
-            mViewModel.save(name, presence)
+            mViewModel.save(mGuestId, name, presence)
         }
     }
 
