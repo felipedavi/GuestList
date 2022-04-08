@@ -79,4 +79,94 @@ class GuestRepository private constructor(context: Context) {
             guest
         }
     }
+
+    fun getAll(): List<GuestModel> {
+        val list: MutableList<GuestModel> = ArrayList()
+        return try {
+            val db = mGuestDataBaseHelper.readableDatabase
+            val projection = arrayOf(
+                DataBaseConstants.GUEST.COLUMNS.ID,
+                DataBaseConstants.GUEST.COLUMNS.NAME, DataBaseConstants.GUEST.COLUMNS.PRESENCE
+            )
+            val cursor = db.query(
+                DataBaseConstants.GUEST.TABLE_NAME, projection, null,
+                null, null, null, null
+            )
+
+            if (cursor != null && cursor.count > 0) {
+                while (cursor.moveToNext()) {
+                    val id =
+                        cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseConstants.GUEST.COLUMNS.ID))
+                    val name =
+                        cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.GUEST.COLUMNS.NAME))
+                    val presence =
+                        (cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseConstants.GUEST.COLUMNS.PRESENCE)) == 1)
+                    val guest = GuestModel(id, name, presence)
+                    list.add(guest)
+                }
+            }
+            cursor?.close()
+            list
+        } catch (e: Exception) {
+            list
+        }
+    }
+
+    fun getPresent(): List<GuestModel> {
+        val list: MutableList<GuestModel> = ArrayList()
+        return try {
+            val db = mGuestDataBaseHelper.readableDatabase
+            val cursor =
+                db.rawQuery(
+                    "SELECT ${DataBaseConstants.GUEST.COLUMNS.ID}, ${DataBaseConstants.GUEST.COLUMNS.NAME}," +
+                            " ${DataBaseConstants.GUEST.COLUMNS.PRESENCE} FROM Guest WHERE ${DataBaseConstants.GUEST.COLUMNS.PRESENCE} = 1",
+                    null
+                )
+            if (cursor != null && cursor.count > 0) {
+                while (cursor.moveToNext()) {
+                    val id =
+                        cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseConstants.GUEST.COLUMNS.ID))
+                    val name =
+                        cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.GUEST.COLUMNS.NAME))
+                    val presence =
+                        (cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseConstants.GUEST.COLUMNS.PRESENCE)) == 1)
+                    val guest = GuestModel(id, name, presence)
+                    list.add(guest)
+                }
+            }
+            cursor?.close()
+            list
+        } catch (e: Exception) {
+            list
+        }
+    }
+
+    fun getAbsent(): List<GuestModel> {
+        val list: MutableList<GuestModel> = ArrayList()
+        return try {
+            val db = mGuestDataBaseHelper.readableDatabase
+            val cursor =
+                db.rawQuery(
+                    "SELECT ${DataBaseConstants.GUEST.COLUMNS.ID}, ${DataBaseConstants.GUEST.COLUMNS.NAME}," +
+                            " ${DataBaseConstants.GUEST.COLUMNS.PRESENCE} FROM Guest WHERE ${DataBaseConstants.GUEST.COLUMNS.PRESENCE} = 0",
+                    null
+                )
+            if (cursor != null && cursor.count > 0) {
+                while (cursor.moveToNext()) {
+                    val id =
+                        cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseConstants.GUEST.COLUMNS.ID))
+                    val name =
+                        cursor.getString(cursor.getColumnIndexOrThrow(DataBaseConstants.GUEST.COLUMNS.NAME))
+                    val presence =
+                        (cursor.getInt(cursor.getColumnIndexOrThrow(DataBaseConstants.GUEST.COLUMNS.PRESENCE)) == 1)
+                    val guest = GuestModel(id, name, presence)
+                    list.add(guest)
+                }
+            }
+            cursor?.close()
+            list
+        } catch (e: Exception) {
+            list
+        }
+    }
 }
