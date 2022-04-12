@@ -31,7 +31,7 @@ class AllGuestsFragment : Fragment() {
     @SuppressLint("NotifyDataSetChanged")
     private fun observe() {
         mViewModel.guestlist.observe(viewLifecycleOwner, Observer {
-            mAdapter.notifyDataSetChanged()
+            mAdapter.updateGuests(it)
         })
     }
 }

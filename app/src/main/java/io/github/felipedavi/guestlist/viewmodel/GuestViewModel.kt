@@ -12,6 +12,6 @@ class GuestViewModel(application: Application) : AndroidViewModel(application) {
     private val mGuestList = MutableLiveData<List<GuestModel>>()
     val guestlist: LiveData<List<GuestModel>> = mGuestList
     fun load() {
-        mGuestRepository.getAll()
+        mGuestList.value = mGuestRepository.getAll()
     }
 }
