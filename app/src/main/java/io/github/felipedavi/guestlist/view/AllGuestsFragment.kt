@@ -28,7 +28,11 @@ class AllGuestsFragment : Fragment() {
         return root
     }
 
-    @SuppressLint("NotifyDataSetChanged")
+    override fun onResume() {
+        super.onResume()
+        mViewModel.load()
+    }
+
     private fun observe() {
         mViewModel.guestlist.observe(viewLifecycleOwner, Observer {
             mAdapter.updateGuests(it)
