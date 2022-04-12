@@ -4,7 +4,6 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import io.github.felipedavi.guestlist.service.model.GuestModel
 import io.github.felipedavi.guestlist.service.repository.GuestRepository
 
@@ -17,9 +16,9 @@ class GuestFormViewModel(application: Application): AndroidViewModel(application
     fun save(id: Int, name: String, presence: Boolean) {
         val guest = GuestModel(id, name, presence)
         if (id == 0) {
-            mRepository.save(guest)
+            mSaveGuest.value = mRepository.save(guest)
         } else {
-            mRepository.update(guest)
+            mSaveGuest.value = mRepository.update(guest)
         }
 
     }
