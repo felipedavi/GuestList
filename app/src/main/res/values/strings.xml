@@ -14,4 +14,8 @@
     <string name="radio_presence">Present</string>
     <string name="radio_absent">Absent</string>
     <string name="button_save">Save</string>
+    <string name="cancel">Cancelar</string>
+    <string name="remove">Remover</string>
+    <string name="remove_guest">Remoção de convidado</string>
+    <string name="want_remove">Deseja remover convidado da lista?</string>
 </resources>
