@@ -1,13 +1,13 @@
 package io.github.felipedavi.guestlist.view
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
-import androidx.lifecycle.Observer
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.ViewModelProvider
 import io.github.felipedavi.guestlist.R
 import io.github.felipedavi.guestlist.databinding.ActivityGuestFormBinding
+import io.github.felipedavi.guestlist.service.constants.GuestConstants
 import io.github.felipedavi.guestlist.viewmodel.GuestFormViewModel
 
 class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
@@ -20,6 +20,7 @@ class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
         mViewModel = ViewModelProvider(this)[GuestFormViewModel::class.java]
         setListeners()
         observe()
+        loadData()
         binding.radioPresence.isChecked = true
         val view = binding.root
         setContentView(view)
@@ -38,14 +39,31 @@ class GuestFormActivity : AppCompatActivity(), View.OnClickListener {
         binding.buttonSave.setOnClickListener(this)
     }
 
+    private fun loadData() {
+        val bundle = intent.extras
+        if (bundle != null) {
+            mGuestId = bundle.getInt(GuestConstants.GUESTID)
+            mViewModel.load(mGuestId)
+        }
+    }
+
     private fun observe() {
-        mViewModel.saveGuest.observe(this, Observer {
+        mViewModel.saveGuest.observe(this) {
             if (it) {
                 Toast.makeText(applicationContext, "Sucesso", Toast.LENGTH_SHORT).show()
             } else {
                 Toast.makeText(applicationContext, "Falha", Toast.LENGTH_SHORT).show()
             }
             finish()
-        })
+        }
+
+        mViewModel.guest.observe(this) {
+            binding.editName.setText(it.name)
+            if (it.presence) {
+                binding.radioPresence.isChecked = true
+            } else {
+                binding.radioAbsent.isChecked = true
+            }
+        }
     }
 }
