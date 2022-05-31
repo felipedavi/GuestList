@@ -35,5 +35,4 @@ class GuestAdapter: RecyclerView.Adapter<GuestViewHolder>() {
     fun attachListener(listener: GuestListener) {
         mListener = listener
     }
-
 }
